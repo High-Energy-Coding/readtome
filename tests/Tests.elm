@@ -1,7 +1,9 @@
 module Tests exposing (..)
 
-import Test exposing (..)
 import Expect
+import Main exposing (..)
+import Test exposing (..)
+
 
 
 -- Check out https://package.elm-lang.org/packages/elm-explorations/test/latest to learn more about testing in Elm!
@@ -9,14 +11,20 @@ import Expect
 
 all : Test
 all =
-    describe "A Test Suite"
-        [ test "Addition" <|
+    describe "flagToRoute"
+        [ test "homepage" <|
             \_ ->
-                Expect.equal 10 (3 + 7)
-        , test "String.left" <|
+                Expect.equal Homepage (flagToRoute "/")
+        , test "homepage with a random url" <|
             \_ ->
-                Expect.equal "a" (String.left 1 "abcdefg")
-        , test "This test should fail" <|
+                Expect.equal Homepage (flagToRoute "/gobbledygook/Whattheheck")
+        , test "stamproute" <|
             \_ ->
-                Expect.fail "failed as expected!"
+                Expect.equal
+                    (StampPage
+                        "7733b6ad-dad1-4d35-aa11-1c4f10500d8b"
+                        "https://s3.us-east-2.amazonaws.com/vondysolutions.com/jamberry.m4a"
+                        IsPaused
+                    )
+                    (flagToRoute "/stamps/7733b6ad-dad1-4d35-aa11-1c4f10500d8b")
         ]
